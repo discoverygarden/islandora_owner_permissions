@@ -69,7 +69,7 @@ function islandora_owner_permissions_islandora_object_access($op, $object, $user
     return islandora_islandora_object_access($op, $object, $user);
   }
   else {
-    return TRUE;
+    return user_access($perm_map[$op], $user);
   }
 }
 
@@ -84,6 +84,6 @@ function islandora_owner_permissions_islandora_datastream_access($op, $datastrea
     return islandora_islandora_datastream_access($op, $datastream, $user);
   }
   else {
-    return TRUE;
+    return user_access($perm_map[$op], $user);
   }
 }
