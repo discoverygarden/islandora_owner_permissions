@@ -4,6 +4,8 @@
 
 Creates several permissions that allow owners of objects to perform management acts on those objects when they do not have blanket write access to the repository.
 
+Caution using this module in a multisite environment is recommended. The Drupal user name that is used as the Fedora object's owner can exist as two different users in different sites giving each user access to the other's objects.
+
 ## Requirements
 
 This module requires the following modules/libraries:
