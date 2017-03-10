@@ -9,6 +9,7 @@ const ISLANDORA_OWNER_PERMISSIONS_EDIT_METADATA = 'islandora owner edit metadata
 const ISLANDORA_OWNER_PERMISSIONS_REPLACE_DATASTREAMS = 'islandora owner replace datastreams';
 const ISLANDORA_OWNER_PERMISSIONS_CREATE_DATASTREAMS = 'islandora owner create datastreams';
 const ISLANDORA_OWNER_PERMISSIONS_REMOVE_OBJECTS = 'islandora owner remove objects';
+const ISLANDORA_OWNER_PERMISSIONS_MANAGE_OBJECT_PROPERTIES = 'islandora owner manage object properties';
 const ISLANDORA_OWNER_PERMISSIONS_REVERT_DATASTREAMS = 'islandora owner revert datastreams';
 const ISLANDORA_OWNER_PERMISSIONS_REGENERATE_DERIVATIVES = 'islandora owner regenerate derivatives';
 
@@ -32,6 +33,10 @@ function islandora_owner_permissions_permission() {
     ISLANDORA_OWNER_PERMISSIONS_REMOVE_OBJECTS => array(
       'title' => t('Remove Owned Objects'),
       'description' => t('Allows a user to purge their owned objects.'),
+    ),
+    ISLANDORA_OWNER_PERMISSIONS_MANAGE_OBJECT_PROPERTIES => array(
+      'title' => t('Manage Owned Objects Properties'),
+      'description' => t('Allows a user to manage the properties of their owned objects.'),
     ),
     ISLANDORA_OWNER_PERMISSIONS_REVERT_DATASTREAMS => array(
       'title' => t('Revert Datastreams on Owned Objects'),
