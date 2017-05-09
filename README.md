@@ -18,6 +18,8 @@ Install as usual, see [this](https://drupal.org/documentation/install/modules-th
 
 ## Troubleshooting/Issues
 
+This module mirrors core permissions and does not create new conventions. Since in the Islandora permissions set to access the UI to purge an object one must have permissions to manage its properties the same is true with the permission set provided by this module.
+
 Having problems or solved a problem? Contact [discoverygarden](http://support.discoverygarden.ca).
 
 ## Maintainers/Sponsors
