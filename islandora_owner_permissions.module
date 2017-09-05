@@ -13,6 +13,14 @@ const ISLANDORA_OWNER_PERMISSIONS_MANAGE_OBJECT_PROPERTIES = 'islandora owner ma
 const ISLANDORA_OWNER_PERMISSIONS_REVERT_DATASTREAMS = 'islandora owner revert datastreams';
 const ISLANDORA_OWNER_PERMISSIONS_REGENERATE_DERIVATIVES = 'islandora owner regenerate derivatives';
 
+const ISLANDORA_OWNER_PROXY_PERMISSIONS_EDIT_METADATA = 'islandora owner proxy edit metadata';
+const ISLANDORA_OWNER_PROXY_PERMISSIONS_REPLACE_DATASTREAMS = 'islandora owner proxy replace datastreams';
+const ISLANDORA_OWNER_PROXY_PERMISSIONS_CREATE_DATASTREAMS = 'islandora owner proxy create datastreams';
+const ISLANDORA_OWNER_PROXY_PERMISSIONS_REMOVE_OBJECTS = 'islandora owner proxy remove objects';
+const ISLANDORA_OWNER_PROXY_PERMISSIONS_MANAGE_OBJECT_PROPERTIES = 'islandora owner proxy manage object properties';
+const ISLANDORA_OWNER_PROXY_PERMISSIONS_REVERT_DATASTREAMS = 'islandora owner proxy revert datastreams';
+const ISLANDORA_OWNER_PROXY_PERMISSIONS_REGENERATE_DERIVATIVES = 'islandora owner proxy regenerate derivatives';
+
 /**
  * Implements hook_permission().
  */
@@ -45,6 +53,34 @@ function islandora_owner_permissions_permission() {
     ISLANDORA_OWNER_PERMISSIONS_REGENERATE_DERIVATIVES => array(
       'title' => t('Regenerate Derivatives on Owned Objects'),
       'description' => t('Allows a user to regenerate derivatives on their owned objects.'),
+    ),
+    ISLANDORA_OWNER_PROXY_PERMISSIONS_EDIT_METADATA => array(
+      'title' => t('Edit Metadata on Owned Objects'),
+      'description' => t('Allows a user to edit metadata on proxied objects.'),
+    ),
+    ISLANDORA_OWNER_PROXY_PERMISSIONS_REPLACE_DATASTREAMS => array(
+      'title' => t('Replace Datastreams on Owned Objects'),
+      'description' => t('Allows a user to replace datastreams on proxied objects.'),
+    ),
+    ISLANDORA_OWNER_PROXY_PERMISSIONS_CREATE_DATASTREAMS => array(
+      'title' => t('Create Datastreams on Owned Objects'),
+      'description' => t('Allows a user to create datastreams on proxied objects.'),
+    ),
+    ISLANDORA_OWNER_PROXY_PERMISSIONS_REMOVE_OBJECTS => array(
+      'title' => t('Remove Owned Objects'),
+      'description' => t('Allows a user to purge proxied objects.'),
+    ),
+    ISLANDORA_OWNER_PROXY_PERMISSIONS_MANAGE_OBJECT_PROPERTIES => array(
+      'title' => t('Manage Owned Objects Properties'),
+      'description' => t('Allows a user to manage the properties of proxied objects.'),
+    ),
+    ISLANDORA_OWNER_PROXY_PERMISSIONS_REVERT_DATASTREAMS => array(
+      'title' => t('Revert Datastreams on Owned Objects'),
+      'description' => t('Allows a user to revert datastreams on proxied objects.'),
+    ),
+    ISLANDORA_OWNER_PROXY_PERMISSIONS_REGENERATE_DERIVATIVES => array(
+      'title' => t('Regenerate Derivatives on Owned Objects'),
+      'description' => t('Allows a user to regenerate derivatives on proxied objects.'),
     ),
   );
 }
