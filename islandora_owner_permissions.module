@@ -6,6 +6,8 @@
  */
 
 // Permissions.
+const ISLANDORA_OWNER_PERMISSIONS_MANAGE_PROXIES = 'islandora owner manage proxies';
+
 const ISLANDORA_OWNER_PERMISSIONS_EDIT_METADATA = 'islandora owner edit metadata';
 const ISLANDORA_OWNER_PERMISSIONS_REPLACE_DATASTREAMS = 'islandora owner replace datastreams';
 const ISLANDORA_OWNER_PERMISSIONS_CREATE_DATASTREAMS = 'islandora owner create datastreams';
@@ -23,10 +25,38 @@ const ISLANDORA_OWNER_PROXY_PERMISSIONS_REVERT_DATASTREAMS = 'islandora owner pr
 const ISLANDORA_OWNER_PROXY_PERMISSIONS_REGENERATE_DERIVATIVES = 'islandora owner proxy regenerate derivatives';
 
 /**
+ * Implements hook_menu().
+ */
+function islandora_owner_permissions_menu() {
+  return array(
+    'islandora/object/%islandora_object/manage/owner_proxies' => array(
+      'title' => 'Owner Proxies',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('islandora_owner_permissions_manage_proxies_form', 2),
+      'type' => MENU_LOCAL_TASK,
+      'file' => 'includes/manage_proxies.form.inc',
+      'access callback' => 'islandora_owner_permissions_manage_proxies_access',
+      'access arguments' => array(2),
+    ),
+  );
+}
+
+/**
+ * @TODO: IMPL,DOC.
+ */
+function islandora_owner_permissions_manage_proxies_access($object) {
+  return TRUE;
+}
+
+/**
  * Implements hook_permission().
  */
 function islandora_owner_permissions_permission() {
   return array(
+    ISLANDORA_OWNER_PERMISSIONS_MANAGE_PROXIES => array(
+      'title' => t('Manage Object Proxies'),
+      'description' => t('Allows a user to perform CRUD on object proxies for objects they do not own.'),
+    ),
     ISLANDORA_OWNER_PERMISSIONS_EDIT_METADATA => array(
       'title' => t('Edit Metadata on Owned Objects'),
       'description' => t('Allows a user to edit metadata on their owned objects.'),
@@ -89,7 +119,8 @@ function islandora_owner_permissions_permission() {
 /**
  * Implements hook_module_implements_alter().
  *
- * We are replacing Islandora's datasteam access implementation with our own.
+ * We are replacing Islandora's datasteam and object access
+ * implementations with our own.
  */
 function islandora_owner_permissions_module_implements_alter(&$implementations, $hook) {
   if ($hook == 'islandora_datastream_access' && isset($implementations['islandora'])) {
