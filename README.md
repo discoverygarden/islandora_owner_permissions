@@ -18,13 +18,19 @@ This module requires the following modules/libraries:
 
 ## Installation
 
-Install as usual, see [this](https://drupal.org/documentation/install/modules-themes/modules-7) for further information.
+Install as usual, see 
+[this](https://drupal.org/documentation/install/modules-themes/modules-7) for
+further information.
 
 ## Troubleshooting/Issues
 
-This module mirrors core permissions and does not create new conventions. Since in the Islandora permissions set to access the UI to purge an object one must have permissions to manage its properties the same is true with the permission set provided by this module.
+This module mirrors core permissions and does not create new conventions. Since
+in the Islandora permissions set to access the UI to purge an object one must
+have permissions to manage its properties the same is true with the permission
+set provided by this module.
 
-Having problems or solved a problem? Contact [discoverygarden](http://support.discoverygarden.ca).
+Having problems or solved a problem? Contact
+[discoverygarden](http://support.discoverygarden.ca).
 
 ## Maintainers/Sponsors
 
@@ -35,8 +41,8 @@ Current maintainers:
 ## Development
 
 If you would like to contribute to this module, please check out our helpful
-[Documentation for Developers](https://github.com/Islandora/islandora/wiki#wiki-documentation-for-developers)
-info, [Developers](http://islandora.ca/developers) section on Islandora.ca and
+[Documentation](https://github.com/Islandora/islandora/wiki#wiki-documentation-for-developers),
+[Developers](http://islandora.ca/developers) section on Islandora.ca and
 contact [discoverygarden](http://support.discoverygarden.ca).
 
 ## License
