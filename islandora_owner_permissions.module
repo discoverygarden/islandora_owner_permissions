@@ -6,8 +6,6 @@
  */
 
 // Permissions.
-const ISLANDORA_OWNER_PERMISSIONS_MANAGE_PROXIES = 'islandora owner manage proxies';
-
 const ISLANDORA_OWNER_PERMISSIONS_EDIT_METADATA = 'islandora owner edit metadata';
 const ISLANDORA_OWNER_PERMISSIONS_REPLACE_DATASTREAMS = 'islandora owner replace datastreams';
 const ISLANDORA_OWNER_PERMISSIONS_CREATE_DATASTREAMS = 'islandora owner create datastreams';
@@ -35,17 +33,10 @@ function islandora_owner_permissions_menu() {
       'page arguments' => array('islandora_owner_permissions_manage_proxies_form', 2),
       'type' => MENU_LOCAL_TASK,
       'file' => 'includes/manage_proxies.form.inc',
-      'access callback' => 'islandora_owner_permissions_manage_proxies_access',
-      'access arguments' => array(2),
+      'access callback' => 'islandora_object_access_callback',
+      'access arguments' => array(ISLANDORA_MANAGE_PROPERTIES, 2),
     ),
   );
-}
-
-/**
- * @TODO: IMPL,DOC.
- */
-function islandora_owner_permissions_manage_proxies_access($object) {
-  return TRUE;
 }
 
 /**
@@ -53,10 +44,6 @@ function islandora_owner_permissions_manage_proxies_access($object) {
  */
 function islandora_owner_permissions_permission() {
   return array(
-    ISLANDORA_OWNER_PERMISSIONS_MANAGE_PROXIES => array(
-      'title' => t('Manage Object Proxies'),
-      'description' => t('Allows a user to perform CRUD on object proxies for objects they do not own.'),
-    ),
     ISLANDORA_OWNER_PERMISSIONS_EDIT_METADATA => array(
       'title' => t('Edit Metadata on Owned Objects'),
       'description' => t('Allows a user to edit metadata on their owned objects.'),
