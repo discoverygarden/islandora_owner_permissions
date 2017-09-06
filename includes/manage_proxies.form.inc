@@ -12,7 +12,7 @@ function islandora_owner_permissions_manage_proxies_form($form, &$form_state, $o
   module_load_include('inc', 'islandora_owner_permissions', 'includes/db');
 
   $form['#tree'] = TRUE;
-  $form['#storage']['pid'] = $object->id;
+  $form_state['#storage']['pid'] = $object->id;
 
   $proxies = islandora_owner_permissions_get_proxies_for_pid($object->id);
   $options = array();
@@ -54,13 +54,18 @@ function islandora_owner_permissions_manage_proxies_form($form, &$form_state, $o
 
 /**
  * Element validation for user.
- * @todo: validate not owner, not already a proxy.
  */
 function islandora_owner_permissions_user_validate($element, &$form_state) {
+  $object = islandora_object_load($form_state['#storage']['pid']);
+  $proxy = user_load_by_name($element['#value']);
+  $proxies = islandora_owner_permissions_get_proxies_for_pid($object->id);
   if (!in_array('user_submit', $form_state['triggering_element']['#parents'])) {
     return;
   }
-  if (!user_load_by_name($element['#value'])) {
+  if (!$element['#value']) {
+    form_error($element, t('Please enter a user.'));
+  }
+  elseif (!$proxy) {
     form_error(
       $element,
       t(
@@ -69,8 +74,23 @@ function islandora_owner_permissions_user_validate($element, &$form_state) {
       )
     );
   }
-  if (!$element['#value']) {
-    form_error($element, t('Please enter a user.'));
+  elseif ($object->owner == $element['#value']) {
+    form_error(
+      $element,
+      t(
+        'User <strong>@user</strong> is already the owner.',
+        array('@user' => $element['#value'])
+      )
+    );
+  }
+  elseif (array_key_exists($proxy->uid, $proxies)) {
+    form_error(
+      $element,
+      t(
+        'User <strong>@user</strong> is already a proxy.',
+        array('@user' => $element['#value'])
+      )
+    );
   }
 }
 
@@ -82,14 +102,14 @@ function islandora_owner_permissions_manage_proxies_form_submit($form, &$form_st
 
   if (in_array('user_submit', $form_state['triggering_element']['#parents'])) {
     islandora_owner_permissions_add_proxy_to_pid(
-      $form['#storage']['pid'],
+      $form_state['#storage']['pid'],
       $form_state['values']['add']['user']
     );
   }
   else {
     foreach($form_state['values']['remove']['proxies'] as $proxy) {
       islandora_owner_permissions_remove_proxy_from_pid(
-        $form['#storage']['pid'],
+        $form_state['#storage']['pid'],
         $proxy
       );
     }

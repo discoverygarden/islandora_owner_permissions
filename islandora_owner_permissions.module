@@ -73,31 +73,31 @@ function islandora_owner_permissions_permission() {
       'description' => t('Allows a user to regenerate derivatives on their owned objects.'),
     ),
     ISLANDORA_OWNER_PROXY_PERMISSIONS_EDIT_METADATA => array(
-      'title' => t('Edit Metadata on Owned Objects'),
+      'title' => t('Edit Metadata on Proxied Objects'),
       'description' => t('Allows a user to edit metadata on proxied objects.'),
     ),
     ISLANDORA_OWNER_PROXY_PERMISSIONS_REPLACE_DATASTREAMS => array(
-      'title' => t('Replace Datastreams on Owned Objects'),
+      'title' => t('Replace Datastreams on Proxied Objects'),
       'description' => t('Allows a user to replace datastreams on proxied objects.'),
     ),
     ISLANDORA_OWNER_PROXY_PERMISSIONS_CREATE_DATASTREAMS => array(
-      'title' => t('Create Datastreams on Owned Objects'),
+      'title' => t('Create Datastreams on Proxied Objects'),
       'description' => t('Allows a user to create datastreams on proxied objects.'),
     ),
     ISLANDORA_OWNER_PROXY_PERMISSIONS_REMOVE_OBJECTS => array(
-      'title' => t('Remove Owned Objects'),
+      'title' => t('Remove Proxied Objects'),
       'description' => t('Allows a user to purge proxied objects.'),
     ),
     ISLANDORA_OWNER_PROXY_PERMISSIONS_MANAGE_OBJECT_PROPERTIES => array(
-      'title' => t('Manage Owned Objects Properties'),
+      'title' => t('Manage Proxied Objects Properties'),
       'description' => t('Allows a user to manage the properties of proxied objects.'),
     ),
     ISLANDORA_OWNER_PROXY_PERMISSIONS_REVERT_DATASTREAMS => array(
-      'title' => t('Revert Datastreams on Owned Objects'),
+      'title' => t('Revert Datastreams on Proxied Objects'),
       'description' => t('Allows a user to revert datastreams on proxied objects.'),
     ),
     ISLANDORA_OWNER_PROXY_PERMISSIONS_REGENERATE_DERIVATIVES => array(
-      'title' => t('Regenerate Derivatives on Owned Objects'),
+      'title' => t('Regenerate Derivatives on Proxied Objects'),
       'description' => t('Allows a user to regenerate derivatives on proxied objects.'),
     ),
   );
@@ -123,13 +123,23 @@ function islandora_owner_permissions_module_implements_alter(&$implementations, 
  */
 function islandora_owner_permissions_islandora_object_access($op, $object, $user) {
   module_load_include('inc', 'islandora_owner_permissions', 'includes/utilities');
+  module_load_include('inc', 'islandora_owner_permissions', 'includes/db');
+  if (!isset($user->name) || !isset($user->uid)) {
+    return user_access($perm_map[$op], $user);
+  }
   $perm_map = islandora_owner_permissions_permission_map();
+  $proxy_perm_map = islandora_owner_permissions_proxy_permission_map();
+  $proxies = islandora_owner_permissions_get_proxies_for_pid($object->id);
   // Call original if we are not the owner or don't override the op.
-  if (!isset($user->name) || $user->name != $object->owner || !array_key_exists($op, $perm_map)) {
+  if (($user->name != $object->owner && !array_key_exists($user->uid, $proxies)) ||
+    !(array_key_exists($op, $perm_map) && array_key_exists($op, $proxy_perm_map))) {
     return islandora_islandora_object_access($op, $object, $user);
   }
   else {
-    return user_access($perm_map[$op], $user);
+    return (
+      ($user->name == $object->owner && user_access($perm_map[$op], $user)) ||
+      (array_key_exists($user->uid, $proxies) && user_access($proxy_perm_map[$op], $user))
+    );
   }
 }
 
@@ -138,13 +148,23 @@ function islandora_owner_permissions_islandora_object_access($op, $object, $user
  */
 function islandora_owner_permissions_islandora_datastream_access($op, $datastream, $user) {
   module_load_include('inc', 'islandora_owner_permissions', 'includes/utilities');
+  module_load_include('inc', 'islandora_owner_permissions', 'includes/db');
+  if (!isset($user->name) || !isset($user->uid)) {
+    return user_access($perm_map[$op], $user);
+  }
   $perm_map = islandora_owner_permissions_permission_map();
+  $proxy_perm_map = islandora_owner_permissions_proxy_permission_map();
+  $proxies = islandora_owner_permissions_get_proxies_for_pid($datastream->parent->id);
   // Call original if we are not the owner or don't override the op.
-  if (!isset($user->name) || $user->name != $datastream->parent->owner || !array_key_exists($op, $perm_map)) {
+  if (($user->name != $datastream->parent->owner && !array_key_exists($user->uid, $proxies)) ||
+    !(array_key_exists($op, $perm_map) && array_key_exists($op, $proxy_perm_map))) {
     return islandora_islandora_datastream_access($op, $datastream, $user);
   }
   else {
-    return user_access($perm_map[$op], $user);
+    return (
+      ($user->name == $datastream->parent->owner && user_access($perm_map[$op], $user)) ||
+      (array_key_exists($user->uid, $proxies) && user_access($proxy_perm_map[$op], $user))
+    );
   }
 }
 

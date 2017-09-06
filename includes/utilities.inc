@@ -23,7 +23,7 @@ function islandora_owner_permissions_permission_map() {
 /**
  * Get an array mapping owner proxy permissions to Islandora permissions.
  */
-function islandora_owner_proxy_permissions_permission_map() {
+function islandora_owner_permissions_proxy_permission_map() {
   return array(
     ISLANDORA_METADATA_EDIT => ISLANDORA_OWNER_PROXY_PERMISSIONS_EDIT_METADATA,
     ISLANDORA_REPLACE_DATASTREAM_CONTENT => ISLANDORA_OWNER_PROXY_PERMISSIONS_REPLACE_DATASTREAMS,
