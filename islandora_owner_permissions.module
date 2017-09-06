@@ -160,3 +160,23 @@ function islandora_owner_permissions_islandora_datastream_access($op, $datastrea
     return user_access($perm_map[$op], $user);
   }
 }
+
+/**
+ * Implements hook_user_delete().
+ *
+ * Remove deleted users from our db.
+ */
+function islandora_owner_permissions_user_delete($user) {
+  module_load_include('inc', 'islandora_owner_permissions', 'includes/db');
+  islandora_owner_permissions_remove_user_from_db($user->uid);
+}
+
+/**
+ * Implements hook_islandora_object_purged().
+ *
+ * Remove deleted objects from our db.
+ */
+function islandora_owner_permissions_islandora_object_purged($pid) {
+  module_load_include('inc', 'islandora_owner_permissions', 'includes/db');
+  islandora_owner_permissions_remove_object_from_db($pid);
+}
