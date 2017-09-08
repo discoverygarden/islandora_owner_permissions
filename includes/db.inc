@@ -9,6 +9,7 @@
  * Get the proxies for a given PID.
  */
 function islandora_owner_permissions_get_proxies_for_pid($pid) {
+  $magic = db_transaction();
   $pid_id = islandora_owner_permissions_get_pid_id($pid);
   return db_select('islandora_owner_permissions_object_proxies', 'proxies')
     ->fields('proxies', array('uid'))
@@ -21,6 +22,7 @@ function islandora_owner_permissions_get_proxies_for_pid($pid) {
  * Add a proxy to a given PID.
  */
 function islandora_owner_permissions_add_proxy_to_pid($pid, $user_name) {
+  $magic = db_transaction();
   $user = user_load_by_name($user_name);
   $pid_id = islandora_owner_permissions_get_pid_id($pid);
   return db_insert('islandora_owner_permissions_object_proxies')
@@ -32,6 +34,7 @@ function islandora_owner_permissions_add_proxy_to_pid($pid, $user_name) {
  * Remove a proxy from a given PID.
  */
 function islandora_owner_permissions_remove_proxy_from_pid($pid, $uid) {
+  $magic = db_transaction();
   $pid_id = islandora_owner_permissions_get_pid_id($pid);
   db_delete('islandora_owner_permissions_object_proxies')
     ->condition('uid', $uid)
@@ -52,6 +55,7 @@ function islandora_owner_permissions_remove_user_from_db($uid) {
  * Remove an object from the db.
  */
 function islandora_owner_permissions_remove_object_from_db($pid) {
+  $magic = db_transaction();
   $pid_id = islandora_owner_permissions_get_pid_id($pid);
   db_delete('islandora_owner_permissions_objects')
     ->condition('id', $pid_id)
@@ -67,6 +71,7 @@ function islandora_owner_permissions_remove_object_from_db($pid) {
  * Sets one if it doesn't exist.
  */
 function islandora_owner_permissions_get_pid_id($pid) {
+  $magic = db_transaction();
   $id = islandora_owner_permissions_pid_id($pid);
   // If no matches, create one.
   if (!$id) {
@@ -78,7 +83,8 @@ function islandora_owner_permissions_get_pid_id($pid) {
 /**
  * Creates/gets the database id related to a PID.
  *
- * @throws Exception if the object cannot be loaded.
+ * @throws Exception
+ *   If the object cannot be loaded.
  */
 function islandora_owner_permissions_pid_to_db($pid) {
   $object = islandora_object_load($pid);

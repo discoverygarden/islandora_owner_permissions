@@ -107,7 +107,7 @@ function islandora_owner_permissions_manage_proxies_form_submit($form, &$form_st
     );
   }
   else {
-    foreach($form_state['values']['remove']['proxies'] as $proxy) {
+    foreach ($form_state['values']['remove']['proxies'] as $proxy) {
       islandora_owner_permissions_remove_proxy_from_pid(
         $form_state['#storage']['pid'],
         $proxy
