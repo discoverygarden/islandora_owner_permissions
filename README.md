@@ -2,9 +2,13 @@
 
 ## Introduction
 
-Creates several permissions that allow owners of objects to perform management acts on those objects when they do not have blanket write access to the repository.
+Creates several permissions that allow owners of objects and their proxies to
+perform management acts on those objects when they do not have blanket write
+access to the repository.
 
-Caution using this module in a multisite environment is recommended. The Drupal user name that is used as the Fedora object's owner can exist as two different users in different sites giving each user access to the other's objects.
+Caution using this module in a multisite environment is recommended. The Drupal
+user name that is used as the Fedora object's owner can exist as two different
+users in different sites giving each user access to the other's objects.
 
 ## Requirements
 
@@ -14,13 +18,25 @@ This module requires the following modules/libraries:
 
 ## Installation
 
-Install as usual, see [this](https://drupal.org/documentation/install/modules-themes/modules-7) for further information.
+Install as usual, see
+[this](https://drupal.org/documentation/install/modules-themes/modules-7) for
+further information.
+
+## Configuration
+
+This module uses the core user autocomplete for the `Owner Proxy` form element.
+if you want to take advantage of this autocomplete the user will need the
+permission `View user profiles`.
 
 ## Troubleshooting/Issues
 
-This module mirrors core permissions and does not create new conventions. Since in the Islandora permissions set to access the UI to purge an object one must have permissions to manage its properties the same is true with the permission set provided by this module.
+This module mirrors core permissions and does not create new conventions. Since
+in the Islandora permissions set to access the UI to purge an object one must
+have permissions to manage its properties the same is true with the permission
+set provided by this module.
 
-Having problems or solved a problem? Contact [discoverygarden](http://support.discoverygarden.ca).
+Having problems or solved a problem? Contact
+[discoverygarden](http://support.discoverygarden.ca).
 
 ## Maintainers/Sponsors
 
@@ -31,8 +47,8 @@ Current maintainers:
 ## Development
 
 If you would like to contribute to this module, please check out our helpful
-[Documentation for Developers](https://github.com/Islandora/islandora/wiki#wiki-documentation-for-developers)
-info, [Developers](http://islandora.ca/developers) section on Islandora.ca and
+[Documentation](https://github.com/Islandora/islandora/wiki#wiki-documentation-for-developers),
+[Developers](http://islandora.ca/developers) section on Islandora.ca and
 contact [discoverygarden](http://support.discoverygarden.ca).
 
 ## License
